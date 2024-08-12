@@ -32,9 +32,10 @@ function getHumanChoice() {
         playRound('scissors', getComputerChoice());
     });
 
-    document.body.appendChild(rock);
-    document.body.appendChild(paper);
-    document.body.appendChild(scissors);
+    const buttonContainer = document.getElementById('button-container');
+    buttonContainer.appendChild(rock);
+    buttonContainer.appendChild(paper);
+    buttonContainer.appendChild(scissors);
 }
 
 let humanScore = 0;
