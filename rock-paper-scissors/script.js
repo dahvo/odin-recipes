@@ -1,9 +1,9 @@
 function getComputerChoice() {
-    let randomNumber = Math.random();
+    const randomNumber = Math.random();
     let choice;
-    if (randomNumber >= .66) {
+    if (randomNumber >= (2/3)) {
         choice = "scissors";
-    } else if (randomNumber >= .33) {
+    } else if (randomNumber >= (1/3)) {
         choice = "paper";
     } else {
         choice = "rock";
@@ -12,77 +12,66 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-    let choice = prompt("What is your choice? (rock, paper, scissors)");
-    //console.log(choice, " entered");
-    while (choice.toLowerCase() !== "rock" && choice.toLowerCase() !== "paper" && choice.toLowerCase() !== "scissors") {
-        choice = prompt("Please try again, what is your choice? (rock, paper, scissors)");
-    }
-    return choice.toLowerCase();
+    // Create a new button element
+    const rock = document.createElement('button');
+    rock.textContent = 'Rock';
+    const paper = document.createElement('button');
+    paper.textContent = 'Paper'
+    const scissors = document.createElement('button');
+    scissors.textContent = 'Scissors'
+
+    rock.addEventListener('click', () => {
+        playRound('rock', getComputerChoice());
+    });
+
+    paper.addEventListener('click', () => {
+        playRound('paper', getComputerChoice());
+    });
+
+    scissors.addEventListener('click', () => {
+        playRound('scissors', getComputerChoice());
+    });
+
+    document.body.appendChild(rock);
+    document.body.appendChild(paper);
+    document.body.appendChild(scissors);
 }
 
 let humanScore = 0;
 let computerScore = 0;
 
 function playRound(humanChoice, computerChoice) {
-    let result = 0;
-    switch (humanChoice) {
-        case "rock":
-            if (computerChoice === "paper") {
-                result = -1;
-            } else if (computerChoice === "scissors") {
-                result = 1;
-            } else {
-                result = 0;
-            }
-            //return result;
-            break;
-        case "paper":
-            if (computerChoice === "rock") {
-                result = 1;
-            } else if (computerChoice === "scissors") {
-                result = -1;
-            } else {
-                result = 0;
-            }
-            //return result;
-            break;
-        case "scissors":
-            if (computerChoice === "rock") {
-                result = -1;
-            } else if (computerChoice === "paper") {
-                result = 1;
-            } else {
-                result = 0;
-            }
-            //return result;
-            break;
-    }
+    const outcomes = {
+        rock: { rock: 0, paper: -1, scissors: 1 },
+        paper: { rock: 1, paper: 0, scissors: -1 },
+        scissors: { rock: -1, paper: 1, scissors: 0 },
+    };
+
+    const result = outcomes[humanChoice][computerChoice];
+
     if (result === -1) {
         console.log("You lose!", computerChoice, "beats", humanChoice, "!")
+        computerScore++
     } else if (result === 1) {
         console.log("You win!, ", humanChoice, "beats", computerChoice, "!")
+        humanScore++
     } else {
         console.log("You both picked", humanChoice, "and", computerChoice)
     }
+
+
+
+    if(humanScore > computerScore){
+        console.log("You are winning!", humanScore, "to", computerScore)
+    }else if(humanScore < computerScore){
+        console.log("You are Losing!", humanScore, "to", computerScore)
+    }else{
+        console.log("You are Tied!", humanScore, "to", computerScore)
+    }
+    console.log("Your score is", humanScore, "to", computerScore)
     return result;
 
-
 }
 
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        let humanChoice = getHumanChoice();
-        let computerChoice = getComputerChoice();
-        let result = playRound(humanChoice, computerChoice);
-
-        if (result === -1) {
-            computerScore++
-        } else if (result === 1) {
-            humanScore++
-        }
-    }
-}
-
-playGame()
-console.log("Your score is", humanScore, "to", computerScore)
+getHumanChoice()
