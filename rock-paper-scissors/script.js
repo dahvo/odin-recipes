@@ -48,27 +48,26 @@ function playRound(humanChoice, computerChoice) {
     };
 
     const result = outcomes[humanChoice][computerChoice];
+    const resultsDiv = document.getElementById('results');
+    const scoreDiv = document.getElementById('score');
 
     if (result === -1) {
-        console.log("You lose!", computerChoice, "beats", humanChoice, "!")
-        computerScore++
+        resultsDiv.innerText = `You lose! ${computerChoice} beats ${humanChoice}!`;
+        computerScore++;
     } else if (result === 1) {
-        console.log("You win!, ", humanChoice, "beats", computerChoice, "!")
-        humanScore++
+        resultsDiv.innerText = `You win! ${humanChoice} beats ${computerChoice}!`;
+        humanScore++;
     } else {
-        console.log("You both picked", humanChoice, "and", computerChoice)
+        resultsDiv.innerText = `You both picked ${humanChoice} and ${computerChoice}`;
     }
-
-
 
     if(humanScore > computerScore){
-        console.log("You are winning!", humanScore, "to", computerScore)
+        scoreDiv.innerText = `You are winning! ${humanScore} to ${computerScore}`;
     }else if(humanScore < computerScore){
-        console.log("You are Losing!", humanScore, "to", computerScore)
-    }else{
-        console.log("You are Tied!", humanScore, "to", computerScore)
+        scoreDiv.innerText = `You are Losing! ${humanScore} to ${computerScore}`;
+    }else {
+        scoreDiv.innerText = `You are Tied! ${humanScore} to ${computerScore}`;
     }
-    console.log("Your score is", humanScore, "to", computerScore)
     return result;
 
 }
